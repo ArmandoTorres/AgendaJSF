@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <h:head>
+        <title>
+            <ui:insert name="title">#{bundle['application.home.title']}</ui:insert>
+        </title>
+        <!-- Main bootstrap core -->
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/mainbootstrap.css"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css"/>
+        <!-- DashBoard Example -->
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/navbar-fixed-top.css"/>
+        <!-- Shortcut icon -->
+        <link rel="shortcut icon" href="#{request.contextPath}/resources/images/diary.png"/>
+        
+    </h:head>
+    
+    <h:body>
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                <h:link class="navbar-brand" value="#{bundle['application.home.projectName']}" outcome="/pages/welcome"/>
+            </div>
+           <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><h:link value="Home" outcome="/pages/welcome"/></li>
+                <!-- Contact's --> 
+                <li class="dropdown">
+                    <h:link value="#{bundle['application.home.option1']}" p:class="dropdown-toggle" p:data-toggle="dropdown"> <b class="caret"></b></h:link>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-header">#{bundle['application.home.option1.1']}</li>
+                    <li><h:link value="#{bundle['application.home.option1.3']}" outcome="/pages/findContact"/></li>
+                    <li><h:link value="#{bundle['application.home.option1.4']}" outcome="/pages/addContact"/></li>
+                  </ul>
+                </li>
+                <!-- Login Panel -->
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{sessionScope['CurrentUser']} <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li class="dropdown-header">
+                              <h:outputText value="Panel de Control"/>
+                          </li>
+                          <li>
+                              <h:link value="&#160;&#160;Cambiar Email" outcome="/pages/changeEmail?faces-redirect=true"/>
+                          </li>    
+                          <li>
+                              <h:link value="&#160;&#160;Cambiar Clave" outcome="/pages/changePassword?faces-redirect=true"/>
+                          </li>    
+                          <li>
+                              <h:link value="&#160;&#160;Cerrar Cuenta" outcome="/pages/closeAccount?faces-redirect=true"/>
+                          </li>
+                          <c:if test="#{sessionScope['UserRolType'] eq 'ADMIN'}">
+                            <li class="divider"/>
+                            <li class="dropdown-header">
+                                <h:outputText value="Opciones Admin"/>
+                            </li>
+                            <li>
+                                <h:link value="&#160;&#160;Crear Usuarios" outcome="/pages/addUser"/>
+                                <h:link value="&#160;&#160;Editar Usuarios" outcome="/pages/editUser"/>
+                            </li>
+                          </c:if>
+                          <li class="divider"/>
+                          <li><h:form>
+                                <h:commandLink action="#{mainController.logOut()}" 
+                                               value="#{bundle['application.home.logoutBotton']}"
+                                               style="display: block;padding: 3px 20px;clear: both;font-weight: 400;line-height: 1.42857143;color: #333;white-space: nowrap; text-decoration: none;"/>
+                              </h:form>
+                          </li>
+                      </ul>
+                    </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>         
+        
+        <ui:insert name="content"></ui:insert>
+        <ui:insert name="footer">
+            <div id="footer">
+                <div class="container">
+                    <p class="text-muted"><h:outputText value="#{bundle['application.copyright']}" escape="false"/></p>
+                </div>
+            </div>
+        </ui:insert>
+        <script src="#{request.contextPath}/resources/js/jquery.js"></script>
+        <script src="#{request.contextPath}/resources/js/bootstrapmin.js"></script>
+        <script src="#{request.contextPath}/resources/js/docs.js"></script>
+        
+    </h:body>
+    
+</html>

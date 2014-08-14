@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+   <h:head>
+        <title>#{bundle['application.home.loginBotton']}</title>
+        <link rel="shortcut icon" href="#{request.contextPath}/resources/images/diary.png"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/signin.css"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/bootstrap.min.css"/>
+    </h:head>
+
+    <h:body style="background-color:#eee">
+        <!-- Login form -->
+        <div class="container">
+            <h:form styleClass="form-signin" p:role="form" >
+                <h2>#{bundle['application.home.loginBotton']}</h2>
+                <h:inputText id="userName" class="form-control" 
+                             value="#{mainController.email}"
+                             p:autofocus="true"
+                             p:placeholder="Email"
+                             p:type="email"
+                             required="true"
+                             requiredMessage="#{bundle['application.login.user.validation']}">
+                </h:inputText>
+
+                <h:inputSecret id="password" class="form-control" 
+                               value="#{mainController.password}"
+                               p:type="password"
+                               p:placeholder="#{bundle['application.login.password']}"
+                               required="true"
+                               requiredMessage="#{bundle['application.login.password.validation']}">
+                </h:inputSecret>
+
+                <h:commandButton value="Iniciar session" action="#{mainController.login()}" class="btn btn-lg btn-primary btn-block"/>
+                <h:commandButton value="Crear cuenta" action="pages/addAccount?faces-redirect=true" class="btn btn-sm btn-link btn-block" immediate="true"/>
+                <br/>
+                <h:messages styleClass="well"/>
+            </h:form>
+        </div>    
+    </h:body>    
+    
+</html>

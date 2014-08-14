@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="../WEB-INF/template/menu.xhtml">
+        <ui:define name="title">
+            #{bundle['application.findContact.title']}
+        </ui:define>
+        <ui:define name="content">
+        <div class="container">
+            <h:form styleClass="bs-example bs-example-form" p:role="form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <h:commandButton styleClass="btn btn-default" 
+                                                         value="#{bundle['application.findContact.find']}"
+                                                         action="#{contactoBean.buscarContacto()}">
+                                           <f:ajax execute="findKeyWords" render="contactoDataTable"/> 
+                                        </h:commandButton>
+                                    </span>
+                                    <h:inputText id="findKeyWords"
+                                                 value="#{contactoBean.param}"
+                                                 p:autofocus="true"
+                                                 p:placeholder="#{bundle['application.findContact.find.placeholder']}"
+                                                 styleClass="form-control">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <h:message for="findKeyWords" styleClass="alert alert-danger"/>
+                        </div>
+                    <br/>
+                    <h:dataTable styleClass="table table-hover" value="#{contactoBean.lista}" var="table" id="contactoDataTable">
+                            <h:column>
+                                <f:facet name="header">#{bundle['application.findContact.table.field1']}</f:facet>
+                                #{table.name}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle['application.findContact.table.field2']}</f:facet>
+                                #{table.surname}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle['application.findContact.table.field3']}</f:facet>
+                                #{table.phone}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle['application.findContact.table.field5']}</f:facet>
+                                #{table.email}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{bundle['application.findContact.table.field6']}</f:facet>
+                                    <h:commandButton value="#{bundle['application.findContact.table.field6.button1']}" 
+                                                     styleClass="btn btn-default"
+                                                     immediate="true"
+                                                     action="#{contactoBean.edit(table.id)}">
+                                        <f:ajax execute="@this" render="contactoDataTable"/>
+                                    </h:commandButton>   
+                                    <h:outputText value="&#160;"/>
+                                    <h:commandButton value="#{bundle['application.findContact.table.field6.button2']}" 
+                                                     styleClass="btn btn-default"
+                                                     action="#{contactoBean.delete(table)}"
+                                                     immediate="true">
+                                    </h:commandButton>    
+                            </h:column>
+                        </h:dataTable>
+                   <div style="text-align: center">
+                        <ul class="pagination pagination-sm">
+                                <li class="previous #{contactoBean.hasPrevious()}">
+                                    <h:commandLink value="&#171; Previous"
+                                                   immediate="true"
+                                                   action="#{contactoBean.previous()}"/>
+                                </li>
+                                    <c:forEach var="i" begin="0" end="#{contactoBean.paginacion.size}">
+                                        <li class="#{contactoBean.paginacion.currentPosition eq i ? 'active' : ''}">
+                                           <h:commandLink value="#{i}"
+                                                          immediate="true"
+                                                          action="#{contactoBean.setTablePosition(i)}"/>
+                                        </li>    
+                                    </c:forEach>
+                                <li class="next #{contactoBean.hasNext()}">
+                                    <h:commandLink value="Next &#187;"
+                                                   immediate="true"
+                                                   action="#{contactoBean.next()}"/>
+                                </li>
+                        </ul>
+                   </div>  
+                </h:form>
+        </div>
+        </ui:define>
+    </ui:composition>
+</html>

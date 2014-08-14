@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:composition template="/WEB-INF/template/menu.xhtml">
+        
+        <ui:define name="title">Cambiar Email</ui:define>
+        
+        <ui:define name="content">
+            <div id="formContainer" class="container">
+                <h2 style="border-bottom: 2px solid #eee;">
+                    <h:outputText value="Inactivar cuenta"/>
+                </h2>
+                <div style="border-bottom: 2px solid #eee;">
+                        <p class="text-warning text-justify">
+                            <h:outputText value="#{bundle['application.closeAccount.advertasiment']}" escape="false"/>
+                        </p>
+                </div>    
+                <h:form p:role="form" style="padding-top:5px;">
+                    <div class="form-group">
+                        <h:outputLabel value="Razon" for="reason"/>
+                        <h:selectOneMenu required="true" class="form-control"
+                                         value="#{closeAccountBean.selectedReasonsId}"
+                                         requiredMessage="Debe seleccionar una razon!">
+                            <f:selectItems value="#{closeAccountBean.reasonsList}"/>
+                        </h:selectOneMenu>
+                    </div>    
+                    <div class="form-group">
+                        <h:outputLabel value="Descripcion" for="feedback"/>
+                        <h:inputTextarea id="feedback" class="form-control"
+                                        value="#{closeAccountBean.account.feedback}"
+                                        required="true"
+                                        rows="7"
+                                        style="resize: none"
+                                        requiredMessage="Debe indicar una descripcion."
+                                        validatorMessage="La descripcion debe tener mas de 20 caracteres.">
+                            <f:validateLength minimum="20"/>
+                        </h:inputTextarea>
+                    </div>
+                    <div class="form-group" id="formButtonContainer">
+                        <h:commandButton value="Inactivar Cuenta" action="#{closeAccountBean.cancelAccount()}" styleClass="btn btn-default"/>
+                        <h:outputText value="&#160;"/>
+                        <h:commandButton value="Cancelar" immediate="true" action="/pages/welcome?faces-redirect=true" styleClass="btn btn-default"/>    
+                    </div>
+                    <div class="form-group">
+                        <h:messages styleClass="well"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>    
+</html>

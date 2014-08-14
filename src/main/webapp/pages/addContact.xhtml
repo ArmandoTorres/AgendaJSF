@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <ui:composition template="../WEB-INF/template/menu.xhtml">
+        <ui:define name="title">#{bundle['application.editContact.title']}</ui:define>
+        <ui:define name="content">
+            <div id="formContainer" class="container">
+                <h:form p:role="form">
+                    <h2><h:outputText value="Agregar contacto"/></h2>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bundle['application.findContact.table.field1']}" for="name"/>
+                        <h:inputText id="name" class="form-control"
+                                     required="true"
+                                     value="#{addContactBean.contacto.name}"
+                                     requiredMessage="#{bundle['application.entity.field1.validate']}"
+                                     p:autofocus="true"
+                                     p:placeholder="#{bundle['application.entity.field1.placeHolder']}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bundle['application.findContact.table.field2']}" for="surname"/>
+                        <h:inputText id="surname" class="form-control"
+                                     required="true"
+                                     value="#{addContactBean.contacto.surname}"
+                                     requiredMessage="#{bundle['application.entity.field2.validate']}"
+                                     p:placeholder="#{bundle['application.entity.field2.placeHolder']}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bundle['application.findContact.table.field3']}" for="phone1"/>
+                        <h:inputText id="phone1" class="form-control"
+                                     required="true"
+                                     value="#{addContactBean.contacto.phone}"
+                                     requiredMessage="#{bundle['application.entity.field3.validate']}"
+                                     p:placeholder="#{bundle['application.entity.field3.placeHolder']}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bundle['application.findContact.table.field5']}" for="email"/>
+                        <h:inputText id="email" class="form-control"
+                                     required="true"
+                                     value="#{addContactBean.contacto.email}"
+                                     requiredMessage="#{bundle['application.entity.field4.validate']}"
+                                     p:placeholder="#{bundle['application.entity.field4.placeHolder']}"
+                                     validatorMessage="Email is invalid">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group" id="formButtonContainer">
+                        <h:commandButton value="Guardar" action="#{addContactBean.save()}" styleClass="btn btn-default"/>
+                        <h:outputText value="&#160;"/>
+                        <h:commandButton value="Cancelar" action="addContact?faces-redirect=true" styleClass="btn btn-default" immediate="true"/>
+                    </div>     
+                    <div class="form-group">
+                        <h:messages styleClass="#{addContactBean.msgStyle}"/>
+                    </div>
+                </h:form>
+           </div>        
+        </ui:define>
+    </ui:composition>    
+</html>

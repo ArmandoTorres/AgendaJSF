@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/WEB-INF/template/menu.xhtml">
+        <ui:define name="title"><h:outputText value="Crear Usuarios"/></ui:define>
+        <ui:define name="content">
+            <div class="container" id="formContainer">
+                <h:form p:role="form">
+                    <h2><h:outputText value="Crear cuenta de usuario"/></h2>
+                    <div class="form-group">
+                        <h:outputLabel value="Nombre:" for="name"/>
+                        <h:inputText id="name" class="form-control"
+                                     value="#{createAccountBean.user.name}"
+                                     p:autofocus="true"
+                                     required="true"
+                                     requiredMessage="Debe indicar el nombre de usuario">
+                        </h:inputText>
+                    </div>    
+                    <div class="form-group">
+                        <h:outputLabel value="Apellido:" for="surname"/>
+                        <h:inputText id="surname" class="form-control"
+                                     value="#{createAccountBean.user.surname}"
+                                     required="true"
+                                     requiredMessage="Debe indicar el apellido.">
+                        </h:inputText>
+                    </div>    
+                    <div class="form-group">
+                        <h:outputLabel value="Correo:" for="email"/>
+                        <h:inputText id="email" class="form-control"
+                                     value="#{createAccountBean.user.email}"
+                                     required="true"
+                                     requiredMessage="Debe indicar el correo electronico."
+                                     p:type="email">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            <f:validator validatorId="com.agenda.override.EmailValidator"/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Contraseña:" for="password1"/>
+                        <h:inputSecret id="password1" class="form-control"
+                                       value="#{createAccountBean.user.password}"
+                                       required="true"
+                                       requiredMessage="Debe indicar la contraseña."
+                                       validatorMessage="La contraseña debe tener por lo menos 8 caracteres.">
+                            <f:validateLength minimum="8"/>
+                        </h:inputSecret>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Confirmar:" for="password2"/>
+                        <h:inputSecret id="password2" class="form-control"
+                                     value="#{createAccountBean.password2}"
+                                     required="true"
+                                     requiredMessage="Debe confirmar la contraseña."
+                                     validatorMessage="La contraseña debe tener por lo menos 8 caracteres.">
+                            <f:validateLength minimum="8"/>
+                        </h:inputSecret>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Tipo:" for="UserType"/>
+                        <h:selectOneMenu value="#{createAccountBean.role}"
+                                         required="true"
+                                         requiredMessage="Debe indicar el tipo de usuario."
+                                         class="form-control">
+                            <f:selectItem itemValue="ADMIN" itemLabel="Administrador"/>
+                            <f:selectItem itemValue="PARTICIPANTE" itemLabel="Participante"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="form-group" id="formButtonContainer" >
+                        <h:commandButton value="Crear" action="#{createAccountBean.saveAdminUser()}" styleClass="btn btn-default"/>
+                        <h:outputText value="&#160;"/>
+                        <h:commandButton value="Cancelar" immediate="true" action="/pages/welcome?faces-redirect=true" styleClass="btn btn-default"/>    
+                    </div>
+                    <div class="form-group">
+                        <h:messages styleClass="well"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+        <ui:define name="footer"/>
+    </ui:composition>
+    
+</html>
+

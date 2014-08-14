@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/WEB-INF/template/menu.xhtml">
+        <ui:define name="title">Cambiar Email</ui:define>
+        <ui:define name="content">
+            <div id="formContainer" class="container">
+                <h:form p:role="form">
+                    <h2><h:outputText value="Cambiar Email"/></h2>
+                    <div class="form-group">
+                        <h:outputLabel value="Email actual:" for="email"/>
+                        <h:inputText id="email" class="form-control"
+                                     value="#{changueUserDataBean.currentUser.email}"
+                                     readonly="true"/>
+                    </div>    
+                    <div class="form-group">
+                        <h:outputLabel value="Nuevo email:" for="newEmail"/>
+                        <h:inputText id="newEmail" class="form-control"
+                                     value="#{changueUserDataBean.newEmail}"
+                                     required="true"
+                                     p:autofocus="true"
+                                     requiredMessage="Debe indicar el nuevo email.">
+                            <f:validator validatorId="com.agenda.override.EmailValidator"/>
+                        </h:inputText>
+                    </div>    
+                    <div class="form-group">
+                        <h:outputLabel value="Confirmar email:" for="emailComfirm"/>
+                        <h:inputText id="emailComfirm" class="form-control"
+                                     value="#{changueUserDataBean.confirmEmail}"
+                                     required="true"
+                                     requiredMessage="Debe confirmar el correo electronico.">
+                            <f:validator validatorId="com.agenda.override.EmailValidator"/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group" id="formButtonContainer">
+                        <h:commandButton value="Crear" action="#{changueUserDataBean.updateUserEmail()}" styleClass="btn btn-default"/>
+                        <h:outputText value="&#160;"/>
+                        <h:commandButton value="Cancelar" immediate="true" action="/pages/welcome?faces-redirect=true" styleClass="btn btn-default"/>    
+                    </div>
+                    <div class="form-group">
+                        <h:messages styleClass="well"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
